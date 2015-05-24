@@ -1,0 +1,19 @@
+<html>
+<head>
+	<title>middle</title>
+</head>
+<body>
+中间页面，用于实现跨域异步请求
+<script type="text/javascript">
+var xhr = new XMLHttpRequest();
+	window.onmessage = function(e){
+		var req = e.data
+		if(req.method == 'commitLog'){
+			xhr.open('POST','/'+req.method)
+			xhr.send(req.content);
+		}
+	}
+	
+</script>
+</body>
+</html>
