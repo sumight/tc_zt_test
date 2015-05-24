@@ -14,7 +14,27 @@ var server = http.createServer(function(req,res){
         req.body += chunk
     })
     req.on('end',function(){
+    	// 解析json对象
+        if(!!req.body){
+            req.body = JSON.parse(req.body);
+            for(key in req.body){
+                if(key.match(/^_id/)){
+                    // 将ObjectID字符串传化成对应的对象
+                    req.body[key] = new ObjectID(req.body[key])
+                }
+                if(key.match(/Date$/)){
+                    // 将日期字符串转化成对应的对象
+                    req.body[key] = new Date(req.body[key]);
+                }
+            }
+        }
     	console.log(req.pathname);
+    	// 设置测试目录
+		if(req.pathname === '/setTestDir'){
+			/* global testDir */
+			testDir = req.query.testDir;
+			res.end('ok');
+		}
 		// 获取注入脚本
 		if(req.pathname === '/getInjectScript'){
 			res.writeHeader(200, {'Content-Type':'text/javascript;charset=utf-8'});
@@ -32,7 +52,7 @@ var server = http.createServer(function(req,res){
 			res.end(jsonpStr);
 		}
 		// 提交测试日志
-		if(req.pathname === '/commitLog'){
+		if(req.pathname === '/commitLog'){ 
 			res.end('commitLog');
 		}
 		if(req.pathname === '/openMiddlePage'){
