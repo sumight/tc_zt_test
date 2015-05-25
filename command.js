@@ -1,3 +1,22 @@
+#!/usr/bin/env node
+
+var exec = require('child_process').exec; 
+console.log('测试专题');
+console.log(__dirname)
+
+// exec('node /Users/apple/OpenSourceProject/tc_zt_test/app.js', function(err,stdout,stderr){
+//      console.log(stderr);
+//      console.log(stdout);
+// })
+
+exec('pwd', function(err,stdout,stderr){
+    console.log(stderr);
+    console.log(stdout);
+})
+===============================================
+
+
+
 var http = require('http'),
 	querystring = require('querystring');
 
